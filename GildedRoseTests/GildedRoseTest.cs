@@ -133,5 +133,32 @@ namespace GildedRoseTests
             Assert.Equal(50, item.Quality);
         }
         #endregion
+        #region Test_BackstagePrds
+        [Fact]
+        public void TestConjuredPrd_QualityDecreaseTwice()
+        {
+            Item item = CreateAndUpdateItem(GildedRose.Conjured, 5, 10);
+            Assert.Equal(8, item.Quality);
+        }
+        [Fact]
+        public void TestConjuredPrdOutOfDate_QualityDecreaseBy4()
+        {
+            Item item = CreateAndUpdateItem(GildedRose.Conjured, 0, 12);
+            Assert.Equal(8, item.Quality);
+        }
+        [Fact]
+        public void TestConjuredPrd_QualityNotNegative()
+        {
+            Item item = CreateAndUpdateItem(GildedRose.Conjured, 7, 1);
+            Assert.Equal(0, item.Quality);
+        }
+        [Fact]
+        public void TestConjuredPrdOutOfDate_QualityNotNegative()
+        {
+            Item item = CreateAndUpdateItem(GildedRose.Conjured, 0, 2);
+            Assert.Equal(0, item.Quality);
+        }
+
+        #endregion
     }
 }

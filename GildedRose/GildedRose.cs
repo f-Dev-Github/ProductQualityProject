@@ -5,6 +5,7 @@ namespace GildedRoseKata
     public class GildedRose
     {
         public const string GenericPrdExpName = "foo";
+        public const string Conjured = "Conjured Mana Cake";
         public  const string AgedBrie = "Aged Brie";
         public  const string BackStagePasses = "Backstage passes to a TAFKAL80ETC concert";
         public  const string Sulfuras = "Sulfuras, Hand of Ragnaros";
@@ -34,9 +35,14 @@ namespace GildedRoseKata
             return item.Name == Sulfuras;
 
         }
+        public bool IsConjuredPrd(Item item)
+        {
+            return item.Name == Conjured;
+
+        }
         public bool IsGenericPrd(Item item)
         {
-           if ((!IsSulfurasPrd(item))&& (!IsBackStagePassesPrd(item))&& (!IsAgedBriePrd(item)))
+           if ((!IsSulfurasPrd(item))&& (!IsBackStagePassesPrd(item))&& (!IsAgedBriePrd(item)) && (!IsConjuredPrd(item)))
             {
                 return true;
             }
@@ -79,19 +85,30 @@ namespace GildedRoseKata
                 item.Quality = MaximumQuality;
             }
         }
+        public void ManageConjuredPrd(Item item)
+        {
+            if (IsConjuredPrd(item))
+            {
+                item.SellIn--;
+                item.Quality = (item.SellIn > 0) ? item.Quality -2 : item.Quality - 4;
+                if (item.Quality < 0)
+                    item.Quality = MinimumQuality;
+            }
+        }
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
                 Item item = Items[i];
 
-                ManageGenericPrd(item);
+                  ManageGenericPrd(item);
                
                  ManageBackStagePassesPrd(item);
 
                  ManageSulfurasPrd(item);
 
                  ManageAgedBriePrd(item);
+                 ManageConjuredPrd(item);
 
 
 
